@@ -1,14 +1,22 @@
 import { RouteRecordRaw } from 'vue-router';
 
+import DefaultLayout from 'layouts/MainLayout.vue';
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    name: 'Home',
+    component: DefaultLayout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('pages/dashboard/Dashboard.vue'),
+      },
+    ],
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
